@@ -30,7 +30,7 @@ python3 parallel.py --weight person-detection-retail-0013.xml --source video_pat
 if you have multiple source you can add 
 
 ```bash
-python3 parallel.py --weight person-detection-retail-0013.xml --source video_path1 video_path2
+python3 parallel.py --weight person-detection-retail-0013.xml --source 0 2
 ```
 
 https://user-images.githubusercontent.com/48081267/162435914-4e4f81e4-78a6-472e-85e2-590a14b9dabc.mp4
