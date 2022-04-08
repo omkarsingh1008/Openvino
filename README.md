@@ -25,10 +25,10 @@ git clone https://github.com/omkarsingh1008/product_detection_from_shelf.git
 demo on video
 
 ```bash
-python3 parallel.py --weight best.pt --source video_path
+python3 parallel.py --weight person-detection-retail-0013.xml --source video_path
 ```
 if you have multiple source you can add 
 
 ```bash
-python3 parallel.py --weight best.pt --source video_path1 video_path2
+python3 parallel.py --weight person-detection-retail-0013.xml --source video_path1 video_path2
 ```
