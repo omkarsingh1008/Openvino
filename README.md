@@ -3,7 +3,7 @@
 # openvino installation 
 offical [link](https://docs.openvino.ai/latest/openvino_docs_install_guides_installing_openvino_linux.html)
 
-after installing model we need to Download pretrain model from openvino model zoo or convert model to IR
+after installing openvino we need to Download pretrain model from openvino model zoo or convert model to IR
 ## download model from openvino model zoo
 ```bash
 sudo ./downloader.py --name person-reidentification-retail-0287
