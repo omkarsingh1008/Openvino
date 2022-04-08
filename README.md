@@ -32,5 +32,8 @@ if you have multiple source you can add
 ```bash
 python3 parallel.py --weight person-detection-retail-0013.xml --source video_path1 video_path2
 ```
-## example video
-![alt text](https://github.com/omkarsingh1008/Openvino/blob/main/screen11.mp4)
+
+https://user-images.githubusercontent.com/48081267/162435914-4e4f81e4-78a6-472e-85e2-590a14b9dabc.mp4
+
+
+
