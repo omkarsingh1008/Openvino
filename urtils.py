@@ -1,4 +1,5 @@
 import cv2
+import numpy as np
 from openvino.inference_engine import IECore
 ie = IECore()
 def load(filename,num_sources = 1):
@@ -25,15 +26,59 @@ def postprocess(frame,results):
     for _, label, score, xmin, ymin, xmax, ymax in results:
         h1, w1 = frame.shape[:2]
         
-        boxes.append(tuple(map(int, (xmin * w1, ymin * h1, xmax * w1, ymax * h1))))
+        boxes.append(list(map(int, (xmin * w1, ymin * h1, (xmax - xmin)*w1, (ymax - ymin) * h1))))
         labels.append(int(label))
         scores.append(float(score))
     indices = cv2.dnn.NMSBoxes(bboxes=boxes, scores=scores, score_threshold=0.6, nms_threshold=0.7)
     
 
-    boxes=[boxes[idx] for idx in indices]
+    boxes=[(boxes[idx]) for idx in indices]
+    labels=[labels[idx] for idx in indices]
+    scores=[scores[idx] for idx in indices]
+    #for  box in boxes:
+    
+    #    cv2.rectangle(img=frame, pt1=box[:2], pt2=box[2:], color=(0,255,0), thickness=3)
 
-    for  box in boxes:
-       
-        cv2.rectangle(img=frame, pt1=box[:2], pt2=box[2:], color=(0,255,0), thickness=3)
-    return frame
+    
+    return boxes,scores,labels,frame
+def xywh2xyxy(xywh):
+
+    if len(xywh.shape) == 2:
+        x = xywh[:, 0] + xywh[:, 2]
+        y = xywh[:, 1] + xywh[:, 3]
+        xyxy = np.concatenate((xywh[:, 0:2], x[:, None], y[:, None]), axis=1).astype('int')
+        return xyxy
+    if len(xywh.shape) == 1:
+        x, y, w, h = xywh
+        xr = x + w
+        yb = y + h
+        return np.array([x, y, xr, yb]).astype('int')
+
+def draw_tracks(image, tracks):
+    for trk in tracks:
+
+        trk_id = trk[1]
+        xmin = trk[2]
+        ymin = trk[3]
+        width = trk[4]
+        height = trk[5]
+        
+        #xmax = xmin + width
+        #ymax = ymin + height
+        b=np.array([xmin,ymin, width, height])
+        bbox=xywh2xyxy(b)
+
+        xcentroid, ycentroid = int(xmin + 0.5*width), int(ymin + 0.5*height)
+
+        text = "ID {}".format(trk_id)
+
+        cv2.putText(image, text, (xcentroid - 10, ycentroid - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+        cv2.circle(image, (xcentroid, ycentroid), 4, (0, 255, 0), -1)
+        cv2.rectangle(img=image, pt1=bbox[:2], pt2=bbox[2:], color=(0,255,0), thickness=3)
+        
+
+    return image
+
+
+                
+
