@@ -54,7 +54,7 @@ def xywh2xyxy(xywh):
         yb = y + h
         return np.array([x, y, xr, yb]).astype('int')
 
-def draw_tracks(image, tracks):
+def draw_tracks(image, tracks,ids):
     for trk in tracks:
 
         trk_id = trk[1]
@@ -72,12 +72,25 @@ def draw_tracks(image, tracks):
 
         text = "ID {}".format(trk_id)
 
-        cv2.putText(image, text, (xcentroid - 10, ycentroid - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
-        cv2.circle(image, (xcentroid, ycentroid), 4, (0, 255, 0), -1)
-        cv2.rectangle(img=image, pt1=bbox[:2], pt2=bbox[2:], color=(0,255,0), thickness=3)
+        #cv2.putText(image, text, (xcentroid - 10, ycentroid - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+        #cv2.circle(image, (xcentroid, ycentroid), 4, (0, 255, 0), -1)
+        #cv2.rectangle(img=image, pt1=bbox[:2], pt2=bbox[2:], color=(0,255,0), thickness=3)
+        ids[trk_id]=bbox
+
+
         
 
-    return image
+    return image,ids
+
+def load_reid(filename,num_sources = 2):
+    filename_bin = filename.split('.')[0]+".bin"
+    net = ie.read_network(model = filename,weights = filename_bin)
+    input_layer = next(iter(net.inputs))
+    n,c,h,w = net.inputs[input_layer].shape
+    exec_net = ie.load_network(network=net,device_name="CPU",num_requests = num_sources)
+    output_layer = next(iter(net.outputs))
+
+    return exec_net,input_layer,output_layer,(n,c,h,w)
 
 
                 
