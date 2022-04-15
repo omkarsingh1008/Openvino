@@ -14,7 +14,11 @@ def load(filename,num_sources = 1):
 
 def preprocess(frame,size):
     n,c,h,w = size
-    input_image = cv2.resize(frame, (w,h))
+    try:
+        input_image = cv2.resize(frame, (w,h))
+    except:
+        input_image = np.zeros((512,512,3))
+        input_image = cv2.resize(input_image, (w,h))
     input_image = input_image.transpose((2,0,1))
     input_image.reshape((n,c,h,w))
     return input_image
@@ -91,6 +95,14 @@ def load_reid(filename,num_sources = 2):
     output_layer = next(iter(net.outputs))
 
     return exec_net,input_layer,output_layer,(n,c,h,w)
+
+def draw_rec(frame,track_id):
+    for i,bbox in track_id.items():
+        cv2.putText(frame, str(i), bbox[:2], cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+        cv2.rectangle(img=frame, pt1=bbox[:2], pt2=bbox[2:], color=(0,255,0), thickness=3)
+    return frame
+
+
 
 
                 
