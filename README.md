@@ -33,7 +33,14 @@ if you have multiple source you can add
 python3 parallel.py --weight person-detection-retail-0013.xml --source 0 2
 ```
 
+## perosn detection demo
+
 https://user-images.githubusercontent.com/48081267/162435914-4e4f81e4-78a6-472e-85e2-590a14b9dabc.mp4
+
+
+## re identification demo 
+
+https://user-images.githubusercontent.com/48081267/163573186-3a957d74-fcc9-4429-8302-73a849f3be15.mp4
 
 
 
