@@ -1,4 +1,4 @@
-# Openvino
+# Openvino Re identification
 ## Openvino parallel inference
 # openvino installation 
 offical [link](https://docs.openvino.ai/latest/openvino_docs_install_guides_installing_openvino_linux.html)
