@@ -19,18 +19,18 @@ setup on loacl machine.
 
 Clone repo and install requirements.txt in a Python>=3.6.0 environment, including PyTorch>=1.7.
 ```bash
-git clone https://github.com/omkarsingh1008/product_detection_from_shelf.git
+git clone https://github.com/omkarsingh1008/Openvino.git
 ```
 ## demo
 demo on video
 
 ```bash
-python3 parallel.py --weight person-detection-retail-0013.xml --source video_path
+python3 siamese.py --weight person-detection-retail-0013.xml --source video_path
 ```
 if you have multiple source you can add 
 
 ```bash
-python3 parallel.py --weight person-detection-retail-0013.xml --source 0 2
+python3 siamese.py --weight person-detection-retail-0013.xml --source 0 2
 ```
 
 https://user-images.githubusercontent.com/48081267/162435914-4e4f81e4-78a6-472e-85e2-590a14b9dabc.mp4
