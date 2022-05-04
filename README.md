@@ -19,7 +19,7 @@ setup on loacl machine.
 
 Clone repo and install requirements.txt in a Python>=3.6.0 environment, including PyTorch>=1.7.
 ```bash
-git clone https://github.com/omkarsingh1008/product_detection_from_shelf.git
+git clone https://github.com/omkarsingh1008/Openvino.git
 ```
 ## demo
 demo on video
