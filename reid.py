@@ -97,3 +97,22 @@ def emb(ids,frame):
         b.append(bbox)
        
     return r,b
+
+def ids_feature_(ids,frame):
+    ids_feat={}
+    for i,bbox in ids.items():
+        img = frame[bbox[1]:bbox[3], bbox[0]:bbox[2]]
+        img = preprocess(img,size)
+        infer_res = exec_net.start_async(request_id=0,inputs={input_layer:img})
+        status=infer_res.wait()
+        results = exec_net.requests[0].outputs[output_layer][0]
+        ids_feat[i]=results
+    return ids_feat
+
+def distance_(feature,feat1):
+    x = torch.tensor(feature).unsqueeze(0)
+    y = torch.tensor(feat1).unsqueeze(0)
+    d=torch.cosine_similarity(x, y)[0].numpy()
+    return d
+
+

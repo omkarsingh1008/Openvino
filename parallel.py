@@ -18,7 +18,7 @@ track_id={}
 model = tf.keras.models.Sequential([
     tf.keras.layers.Dense(20, input_shape=(256,), activation="relu"),
     tf.keras.layers.Dense(40, activation="relu"),
-    tf.keras.layers.Dense(8, activation="softmax"),
+    tf.keras.layers.Dense(10, activation="softmax"),
 ])
 
 model.compile(loss=tf.keras.losses.categorical_crossentropy, optimizer=tf.keras.optimizers.Adam(0.001))
@@ -38,7 +38,7 @@ def manage_cluster(vect,bbox):
     final.sort(key=lambda x: x[0], reverse=True)
     assigned = []
     as_return = []
-    randoms = [0, 1, 2, 3, 4, 5, 6, 7]
+    randoms = [0, 1, 2, 3, 4, 5, 6, 7,8,9]
     for score, idc, bb, vector in final:
         if idc in assigned:
             new_id = np.random.choice(randoms)
@@ -49,7 +49,7 @@ def manage_cluster(vect,bbox):
             assigned.append(idc)
             randoms.remove(idc)
         embs.append(vector[0])
-        op = tf.keras.utils.to_categorical(idc, num_classes=8)
+        op = tf.keras.utils.to_categorical(idc, num_classes=10)
         label.append(op)
         xt = np.array(embs)
         yt = np.array(label)
@@ -64,8 +64,8 @@ def main(filename_path,source):
     tracker = CentroidTracker(max_lost=0, tracker_output_format='mot_challenge')
     tracker1 = CentroidTracker(max_lost=0, tracker_output_format='mot_challenge')
     exec_net,input_layer,output_layer,size = load(filename_path,num_sources=2)
-    vid = cv2.VideoCapture("demo1.mp4")
-    vid1 = cv2.VideoCapture("demo1.mp4")
+    vid = cv2.VideoCapture("4.mp4")
+    vid1 = cv2.VideoCapture("4.mp4")
     grads = []
     uu = []
     while(True):
@@ -97,6 +97,7 @@ def main(filename_path,source):
         #print(ids.keys())
         #print(ids1.keys())
         #cv2.imshow('frameq', frame)
+        
         vect,bbox=emb(ids,frame)
         #print(vect[0].shape)
         c = manage_cluster(vect,bbox)
@@ -119,8 +120,8 @@ def main(filename_path,source):
             bb = np.array(bb)
             x_left, x_top, x_right, x_bottom = bb
         # print(bb)
-            cv2.putText(frame, "ID: " + str(idx), (x_left, x_bottom), 1, cv2.FONT_HERSHEY_DUPLEX, (255, 255, 255), 3)
-            cv2.rectangle(frame, (x_left, x_top), (x_right, x_bottom), (0, 0, 0), 2)
+            cv2.putText(frame, "ID: " + str(idx), (x_left, x_top), 1, cv2.FONT_HERSHEY_DUPLEX, (0, 0, 255), 3)
+            cv2.rectangle(frame, (x_left, x_top), (x_right, x_bottom), (0, 255, 0), 1)
 
 
         #print(track_id)

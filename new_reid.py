@@ -13,15 +13,18 @@ from sklearn.metrics.pairwise import euclidean_distances as ed
 import zmq
 import os
 import torch
+from sklearn.cluster import KMeans
 
 track_id={}
 model = tf.keras.models.Sequential([
     tf.keras.layers.Dense(20, input_shape=(256,), activation="relu"),
     tf.keras.layers.Dense(40, activation="relu"),
-    tf.keras.layers.Dense(27, activation="softmax"),
+    tf.keras.layers.Dense(40, activation="relu"),
+    tf.keras.layers.Dense(40, activation="relu"),
+    tf.keras.layers.Dense(11, activation="softmax"),
 ])
 
-model.compile(loss=tf.keras.losses.categorical_crossentropy, optimizer=tf.keras.optimizers.Adam(0.001))
+model.compile(loss="sparse_categorical_crossentropy", optimizer=tf.keras.optimizers.Adam(0.001))
 
 embs = deque(maxlen=10)
 label = deque(maxlen=10)
@@ -38,10 +41,10 @@ def manage_cluster(vect,bbox):
     final.sort(key=lambda x: x[0], reverse=True)
     assigned = []
     as_return = []
-    randoms = [0, 1, 2, 3, 4, 5, 6, 7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26]
+    randoms = [0, 1, 2, 3, 4, 5, 6, 7,8,9,10]
     for score, idc, bb, vector in final:
         if idc in assigned:
-            print(randoms)
+           
             new_id = np.random.choice(randoms)
             randoms.remove(new_id)
             assigned.append(new_id)
@@ -50,11 +53,11 @@ def manage_cluster(vect,bbox):
             assigned.append(idc)
             randoms.remove(idc)
         embs.append(vector[0])
-        op = tf.keras.utils.to_categorical(idc, num_classes=27)
+        op = tf.keras.utils.to_categorical(idc, num_classes=11)
         label.append(op)
         xt = np.array(embs)
         yt = np.array(label)
-        if score >= 0.20:
+        if score >= 0.2:
             model.fit(xt, yt, verbose=0, epochs=1)
         as_return.append([score, idc, bb])
     return as_return
@@ -65,7 +68,7 @@ def main(filename_path,source):
     tracker = CentroidTracker(max_lost=0, tracker_output_format='mot_challenge')
 
     exec_net,input_layer,output_layer,size = load(filename_path,num_sources=2)
-    vid = cv2.VideoCapture(0)
+    vid = cv2.VideoCapture("4.mp4")
 
     grads = []
     uu = []
@@ -89,8 +92,40 @@ def main(filename_path,source):
         frame,ids = draw_tracks(frame, tracks,ids)
         
         vect,bbox=emb(ids,frame)
-        
         c = manage_cluster(vect,bbox)
+        print(len(vect))
+        vect = np.array(vect)
+        print(vect.shape)
+        y= np.array([i for i in range(len(vect))])
+        try:
+            model_s = tf.keras.models.Sequential([
+    tf.keras.layers.Dense(20, input_shape=(256,), activation="relu"),
+    tf.keras.layers.Dense(40, activation="relu"),
+    tf.keras.layers.Dense(40, activation="relu"),
+    tf.keras.layers.Dense(40, activation="relu"),
+    tf.keras.layers.Dense(len(vect), activation="softmax"),
+])
+
+            model_s.compile(loss="sparse_categorical_crossentropy", optimizer=tf.keras.optimizers.Adam(0.001))
+            model_s.fit(vect,y,verbose=1,epochs=1)
+            p = model_s.predict(vect)
+            idcs=[]
+            for i in p:
+                idc = np.argmax(p[0])
+                idcs.append(idc)
+            print(idcs)
+        except Exception as e:
+            print(e)
+        try:
+            #vect = vect.reshape(1,-1)
+            model = KMeans(n_clusters=len(vect))
+            model.fit(vect)
+            labels= model.predict(vect)
+            print(labels)
+        except Exception as e:
+            print(e)
+                   
+       
         
         for score, idx, bb in c:
             if idx in uu:
@@ -116,7 +151,7 @@ def main(filename_path,source):
 
         
         
-        draw_img = cv2.resize(frame, (1000, 1000))
+        draw_img = cv2.resize(frame, (1000, 500))
         
         cv2.imshow('frame', draw_img)
         

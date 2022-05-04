@@ -4,6 +4,17 @@ from scipy.spatial import distance
 from motrackers.utils.misc import get_centroid
 from motrackers.track import Track
 
+def change(outputs):
+    l=[]
+    for i,t in enumerate(outputs):
+        if 5 == t[1]:
+            print("*"*50)
+            t = list(t)
+            t[1]=3
+            t = tuple(t)
+        l.append(t)
+    return l
+
 
 class Tracker:
     """
@@ -69,7 +80,7 @@ class Tracker:
         self.tracks[track_id].update(
             frame_id, bbox, detection_confidence, class_id=class_id, lost=lost, iou_score=iou_score, **kwargs
         )
-
+    
     @staticmethod
     def _get_tracks(tracks):
         """
@@ -83,9 +94,13 @@ class Tracker:
         """
 
         outputs = []
+       
         for trackid, track in tracks.items():
             if not track.lost:
-                outputs.append(track.output())
+                t=list(track.output())
+                t[1]=trackid
+                t = tuple(t)
+                outputs.append(t)
         return outputs
 
     @staticmethod
@@ -171,6 +186,18 @@ class Tracker:
         for i, (bbox, class_id, confidence) in enumerate(detections):
             if i not in updated_detections:
                 self._add_track(self.frame_count, bbox, confidence, class_id=class_id)
-
+        #if 5 in self.tracks.keys():
+           
+        #    self.tracks[3] = self.tracks.pop(5) 
+            #print("--"*10)
+        #print(self.tracks)
         outputs = self._get_tracks(self.tracks)
+       # print("--------------------------------"*10)
+        #print(self.tracks)
+        #print(outputs)
+        #print("--------------------------------"*10)
+        #l = change(outputs)
+        #print(l)
+        #print("--------------------------------"*10)
         return outputs
+

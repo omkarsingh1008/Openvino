@@ -45,6 +45,7 @@ def postprocess(frame,results):
 
     
     return boxes,scores,labels,frame
+    
 def xywh2xyxy(xywh):
 
     if len(xywh.shape) == 2:
@@ -76,9 +77,9 @@ def draw_tracks(image, tracks,ids):
 
         text = "ID {}".format(trk_id)
 
-        #cv2.putText(image, text, (xcentroid - 10, ycentroid - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
-        #cv2.circle(image, (xcentroid, ycentroid), 4, (0, 255, 0), -1)
-        #cv2.rectangle(img=image, pt1=bbox[:2], pt2=bbox[2:], color=(0,255,0), thickness=3)
+        cv2.putText(image, text, (xcentroid - 10, ycentroid - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+        cv2.circle(image, (xcentroid, ycentroid), 4, (0, 255, 0), -1)
+        cv2.rectangle(img=image, pt1=bbox[:2], pt2=bbox[2:], color=(0,255,0), thickness=3)
         ids[trk_id]=bbox
 
 
