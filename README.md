@@ -35,5 +35,11 @@ python3 siamese.py --weight person-detection-retail-0013.xml --source 0 2
 
 https://user-images.githubusercontent.com/48081267/162435914-4e4f81e4-78a6-472e-85e2-590a14b9dabc.mp4
 
+## demo reid
+
+
+
+
+https://user-images.githubusercontent.com/48081267/166656509-cb83ae15-89f5-40ee-9f6a-d011f78fc1a3.mp4
 
 
