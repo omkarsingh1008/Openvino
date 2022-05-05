@@ -40,4 +40,10 @@ https://user-images.githubusercontent.com/48081267/162435914-4e4f81e4-78a6-472e-
 
 https://user-images.githubusercontent.com/48081267/166656509-cb83ae15-89f5-40ee-9f6a-d011f78fc1a3.mp4
 
+## demo with tracklets reid
+
+
+
+https://user-images.githubusercontent.com/48081267/166936611-129db400-0311-4485-a406-07000a4f3def.mp4
+
 
