@@ -116,3 +116,23 @@ def distance_(feature,feat1):
     return d
 
 
+def distance_list(feature,feat1):
+    x = torch.tensor(feature[0]).unsqueeze(0)
+    dis=[]
+    for i in feat1:
+        y = torch.tensor(i).unsqueeze(0)
+        d=torch.cosine_similarity(x, y)[0].numpy()
+        dis.append(d)
+    
+    return sum(dis)/len(dis)
+
+def ids_feature_list(ids,frame):
+    ids_feat={}
+    for i,bbox in ids.items():
+        img = frame[bbox[1]:bbox[3], bbox[0]:bbox[2]]
+        img = preprocess(img,size)
+        infer_res = exec_net.start_async(request_id=0,inputs={input_layer:img})
+        status=infer_res.wait()
+        results = exec_net.requests[0].outputs[output_layer][0]
+        ids_feat[i]=[results]
+    return ids_feat

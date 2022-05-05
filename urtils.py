@@ -103,7 +103,17 @@ def draw_rec(frame,track_id):
         cv2.rectangle(img=frame, pt1=bbox[:2], pt2=bbox[2:], color=(0,255,0), thickness=3)
     return frame
 
+def tracklets(max_key,feature,track_id,tracklets_id):
+    if max_key not in tracklets_id:
+        tracklets_id[max_key]=0
+    tracklets_id[max_key] = tracklets_id[max_key]+1
 
+    track_id[max_key].insert(tracklets_id[max_key],feature[0])
+
+    if tracklets_id[max_key] > 50:
+        tracklets_id[max_key] = 0
+
+    return tracklets_id,track_id
 
 
                 
