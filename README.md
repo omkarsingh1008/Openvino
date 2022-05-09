@@ -8,11 +8,15 @@ person re-identification :- Person re-identification (ReID), identifying a perso
 offical [link](https://docs.openvino.ai/latest/openvino_docs_install_guides_installing_openvino_linux.html)
 
 after installing openvino we need to Download pretrain model from openvino model zoo or convert model to IR
+
 ## download model from openvino model zoo
 ```bash
 sudo ./downloader.py --name person-reidentification-retail-0287
 ```
 ## convert model to IR
+
+if you have pretrain model tensorflow you can convert tf model to openvino(IR) model.
+
 ```bash
 python3 /opt/intel/openvino_2021.4.582/deployment_tools/model_optimizer/mo_tf.py --saved_model_dir /media/omkar/new_model/saved_model --transformations_config /opt/intel/openvino_2021.4.582/deployment_tools/model_optimizer/extensions/front/tf/ssd_support_api_v2.4.json --tensorflow_object_detection_api_pipeline_config /media/omkar/new_model/pipeline.config --reverse_input_channels
 ```
@@ -46,10 +50,6 @@ https://user-images.githubusercontent.com/48081267/166656509-cb83ae15-89f5-40ee-
 
 ## demo with tracklets reid
 
+https://user-images.githubusercontent.com/48081267/167349982-a3529a23-e924-4000-a9c7-edec82199c96.mp4
 
-
-
-
-
-https://user-images.githubusercontent.com/48081267/167353004-7cb6de1b-23d3-4546-a07e-1faaa7e74b42.mp4
 
