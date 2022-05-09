@@ -1,4 +1,4 @@
-## Multi-camera person re-identification
+## Multi-camera person re-identification (self supervised)
 
 person re-identification :- Person re-identification (ReID), identifying a person of interest at other time or place, is a challenging task in computer vision. Its applications range from tracking people across cameras to searching for them in a large gallery, from grouping photos in a photo album to visitor analysis in a retail store. 
 
@@ -43,10 +43,6 @@ https://user-images.githubusercontent.com/48081267/162435914-4e4f81e4-78a6-472e-
 
 
 ## re identification demo 
-
-
-
-
 
 https://user-images.githubusercontent.com/48081267/167352316-88a81018-b561-4264-8c30-3d7d1c5ed884.mp4
 
