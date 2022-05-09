@@ -1,5 +1,9 @@
-# Openvino Re identification
-## Openvino parallel inference
+## Multi-camera person re-identification
+
+person re-identification :- Person re-identification (ReID), identifying a person of interest at other time or place, is a challenging task in computer vision. Its applications range from tracking people across cameras to searching for them in a large gallery, from grouping photos in a photo album to visitor analysis in a retail store. 
+
+## installtion and setup
+
 # openvino installation 
 offical [link](https://docs.openvino.ai/latest/openvino_docs_install_guides_installing_openvino_linux.html)
 
