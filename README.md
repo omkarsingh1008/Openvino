@@ -50,6 +50,6 @@ https://user-images.githubusercontent.com/48081267/166656509-cb83ae15-89f5-40ee-
 
 ## demo with tracklets reid
 
-https://user-images.githubusercontent.com/48081267/167349982-a3529a23-e924-4000-a9c7-edec82199c96.mp4
+https://drive.google.com/file/d/15mP8qOI_QsuXIIgLybrnfboiWQ0koybH/view
 
 
