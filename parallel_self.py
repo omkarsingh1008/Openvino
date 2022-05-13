@@ -10,7 +10,7 @@ import cv2
 from collections import deque
 import tensorflow as tf
 from sklearn.metrics.pairwise import euclidean_distances as ed
-import zmq
+import zmq_server
 import os
 import torch
 
